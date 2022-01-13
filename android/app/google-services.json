@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "860393777333",
+    "project_id": "fir-notification-test-912b8",
+    "storage_bucket": "fir-notification-test-912b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860393777333:android:8a6acfb86cc338f6ceb6fc",
+        "android_client_info": {
+          "package_name": "com.example.firebase_notification_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860393777333-crbek7sjqi4pe4r77bettec6re4hfnbl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzn8g7uouWDEr_q_e9gYqCWZIogLDxWMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860393777333-crbek7sjqi4pe4r77bettec6re4hfnbl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
