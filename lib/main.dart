@@ -1,17 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_notification_test/services/local_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_notification_test/red_page.dart';
 import 'package:firebase_notification_test/green_page.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
+  print('NotificationType: backgroundHandler');
   print(message.data.toString());
   print(message.notification!.title);
 }
 
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -50,12 +52,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    LocalNotificationService.initialize(context);
+
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('My Firebase Token: $token');
+      //TODO: Save in shared preference and send to youinroll server
+    });
 
     ///Gives you the message on which user taps and it opened the app from terminated state
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
         final String routeFromMessage = message.data['route'];
         print(routeFromMessage);
+        LocalNotificationService.display(message);
         Navigator.of(context).pushNamed(routeFromMessage);
       }
 
@@ -67,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         print(message.notification!.body);
         print(message.notification!.title);
       }
-
+      LocalNotificationService.display(message);
     });
 
     ///Background  but app is open state: user taps on notification
@@ -84,13 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Center(child: Text(widget.title)),
       ),
       body: const Padding(
         padding: EdgeInsets.all(18),
-        child: Text(
-          'You will receive message soon',
-          style: TextStyle(fontSize: 34),
+        child: Center(
+          child: Text(
+            'You will receive message soon',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
